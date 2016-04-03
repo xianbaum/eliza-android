@@ -5,11 +5,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
@@ -18,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-public class Eliza extends Activity {
+public class Eliza extends AppCompatActivity {
 	
 	ArrayList<String> saved_phrases = new ArrayList<String>();
 	ArrayList<List<String>> list_of_list_of_phrases = new ArrayList<List<String>>();
@@ -108,6 +110,8 @@ public class Eliza extends Activity {
 			}
 			((EditText)findViewById(R.id.editText1)).setText( savedInstanceState.getString("input"));
 			scrollToBottom();
+		    Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+		    setSupportActionBar(myToolbar);
 		}
 		else
 			addMessage("<Eliza> Hello. I am Eliza. I am a psychotherapist. Feel free to talk to me about anything");
@@ -117,6 +121,18 @@ public class Eliza extends Activity {
 			public void onClick(View v) {
 				pressButton();
 		}});
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return true;
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu; this adds items to the action bar if it is present.
+	    getMenuInflater().inflate(R.menu.main, menu);
+	    return super.onCreateOptionsMenu(menu);
 	}
 	
 	@Override
@@ -311,7 +327,7 @@ public class Eliza extends Activity {
 		replacer_list.add(new Replacer(Where.CONTAINS, "do you remember", 15));
 		list_of_list_of_phrases.add( Arrays.asList("Did you think I would forget %3$s?","Why do you think I should recall %3$s right now?",
 				"What about %3$s?", "You mentioned %3$s."));
-		replacer_list.add(new Replacer(Where.CONTAINS, "if", 16));
+		replacer_list.add(new Replacer(Where.CONTAINS, "if  ", 16));
 		list_of_list_of_phrases.add( Arrays.asList("What are the implications if %3$s become true?", "Do you really think it's likely that %3$s?",
 				"Do you wish that %3$s?", "What do you think about %3$s?", "Really? if %3$s."));
 		replacer_list.add(new Replacer(Where.CONTAINS, "i dreamt", 17));
